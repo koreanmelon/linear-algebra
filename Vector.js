@@ -1,7 +1,7 @@
 export class Vector extends Array {
 
     /**
-     * Initializes a Vector
+     * Initializes a vector.
      * @param  {...Number} items 
      */
     constructor(...items) {
@@ -9,7 +9,7 @@ export class Vector extends Array {
     }
 
     /**
-     * Gives a String representation of the Vector
+     * Returns a string representation of the vector.
      * @returns {String}
      */
     toString() {
@@ -21,8 +21,22 @@ export class Vector extends Array {
     }
 
     /**
-     * Adds an arbitrary number of Vectors
+     * Returns a vector multiplied by a scalar C.
+     * @param {Number} c 
+     * @returns {Vector}
+     */
+    sMul(c) {
+        let res = new Vector();
+        for (let entry of this) {
+            res.push(entry * c);
+        }
+        return res;
+    }
+
+    /**
+     * Adds an arbitrary number of vectors.
      * @param  {...Vector} vectors 
+     * @returns {Vector}
      */
     static add(...vectors) {
         let res = vectors.pop();

@@ -11,6 +11,12 @@ export default class VectorTest {
         assert(v1.toString() == "[ 1\n  2\n  3\n  4 ]");
     }
 
+    static testSMul() {
+        let v1 = new Vector(1, 2, 3);
+
+        assert(v1.sMul(2).toString() == new Vector(2, 4, 6).toString());
+    }
+
     static testAdd() {
         let v1 = new Vector(1, 2, 3);
         let v2 = new Vector(3, 2, 1);
@@ -26,8 +32,7 @@ export default class VectorTest {
      * @returns {void}
      */
     static main() {
-        let testArray = [this.testAdd, this.testToString];
-        
+        let testArray = [this.testAdd, this.testToString, this.testSMul];
         for (let test of testArray) {
             test();
         }
