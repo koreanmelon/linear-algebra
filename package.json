@@ -1,0 +1,12 @@
+{
+  "name": "matrices",
+  "version": "1.0.0",
+  "description": "A linear algebra module for NodeJS.",
+  "type":"module",
+  "main": "Main.js",
+  "scripts": {
+    "test": "node Main.js"
+  },
+  "author": "koreanmelon",
+  "license": "MIT"
+}
