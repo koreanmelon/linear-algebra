@@ -9,6 +9,18 @@ export class Vector extends Array {
     }
 
     /**
+     * Gives a String representation of the Vector
+     * @returns {String}
+     */
+    toString() {
+        let res = "[";
+        for (let entry of this) {
+            res += ` ${entry}\n `;
+        }
+        return res.trimRight() + " ]";
+    }
+
+    /**
      * Adds an arbitrary number of Vectors
      * @param  {...Vector} vectors 
      */

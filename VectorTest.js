@@ -5,6 +5,12 @@ import { Vector } from "./Vector.js";
 
 export default class VectorTest {
 
+    static testToString() {
+        let v1 = new Vector(1, 2, 3, 4);
+
+        assert(v1.toString() == "[ 1\n  2\n  3\n  4 ]");
+    }
+
     static testAdd() {
         let v1 = new Vector(1, 2, 3);
         let v2 = new Vector(3, 2, 1);
@@ -20,7 +26,11 @@ export default class VectorTest {
      * @returns {void}
      */
     static main() {
-        this.testAdd();
+        let testArray = [this.testAdd, this.testToString];
+        
+        for (let test of testArray) {
+            test();
+        }
     }
 }
 
