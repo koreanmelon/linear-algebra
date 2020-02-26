@@ -1,12 +1,20 @@
 {
-  "name": "matrices",
-  "version": "1.0.0",
-  "description": "A linear algebra module for NodeJS.",
-  "type":"module",
+  "name": "linear-algebra",
+  "version": "0.1.0",
+  "description": "A simple linear algebra module for Node.js.",
+  "type": "module",
   "main": "Main.js",
   "scripts": {
     "test": "node Main.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koreanmelon/linear-algebra.git"
+  },
   "author": "koreanmelon",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koreanmelon/linear-algebra/issues"
+  },
+  "homepage": "https://github.com/koreanmelon/linear-algebra#readme"
 }
