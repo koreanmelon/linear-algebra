@@ -12,21 +12,24 @@ export class Matrix extends Vector {
         this._n = matrixArr[0].length;
         this._size = [this._m, this._n];
         this._isSquare = this._m == this._n;
-        this._rows = matrixArr;
         this._linear = [];
-        for (let j = 0; j < n; j += 1) {
-            for (let i = 0; i < m; i += 1) {
+        for (let j = 0; j < this._n; j += 1) {
+            for (let i = 0; i < this._m; i += 1) {
                 this._linear.push(matrixArr[i][j]);
             }
         }
     }
 
     /**
-     * Getter for the _rows property.
-     * @returns {Number[][]}
+     * Creates a new copy of the matrix and returns it.
+     * @returns {Matrix}
      */
-    get rows() {
-        return this._rows;
+    copy() {
+        let resArr = [];
+        for (let row of this) {
+            resArr.push(row);
+        }
+        return new Matrix(resArr);
     }
 
     /**
@@ -99,24 +102,70 @@ export class Matrix extends Vector {
     }
 
     /**
+     * Cycles the matrix.
+     */
+    cycleMatrix() {
+        let res = new Matrix(this);
+        for (let row of res) {
+            let entry = row.shift();
+            row.push(entry);
+        }
+        return new Matrix(res);
+    }
+
+    /**
+     * Removes a row from the matrix.
+     * @param {Number} rowIndex 
+     */
+    removeRow(rowIndex) {
+        let resArr = [];
+        for (let i = 0; i < this.m; i += 1) {
+            if (i != rowIndex) {
+                resArr.push(this[i]);
+            }
+        }
+        return new Matrix(resArr);
+    }
+
+    /**
+     * Removes a column from the matrix.
+     * @param {Number} colIndex 
+     */
+    removeCol(colIndex) {
+        let resArr = [];
+        for (let row of this) {
+            let tempRow = []
+            for (let i = 0; i < row.length; i += 1) {
+                if (i != colIndex) {
+                    tempRow.push(row[i]);
+                }
+            }
+            resArr.push(tempRow);
+        }
+        return new Matrix(resArr);
+    }
+
+    /**
      * Computes the determinant of a given matrix A.
      * @param {Matrix} A
      */
     static determinant(A) {
         if (!(A instanceof Matrix)) {
             throw new Error("A must be of type matrix.");
-        } else if (A.m != A.n) {
+        } else if (!A.isSquare) {
             throw new Error("A must be a square matrix.");
         }
 
         if (A.m == 2 && A.n == 2) {
             return A[0][0] * A[1][1] - A[0][1] * A[1][0];
-        }
-
-        let res = 0;
-        let cofactors = A[0];
-        for (let i; i > A.n; i += 1) {
-            res += cofactors[i] * this.determinant();
+        } else {
+            let res = 0;
+            let repeat = A.n;
+            for (let i = 0; i < repeat; i += 1) {
+                res += A[0][0] * Matrix.determinant((A.removeCol(0).removeRow(0)));
+                A = A.cycleMatrix();
+            }
+            return res;
         }
     }
 }
