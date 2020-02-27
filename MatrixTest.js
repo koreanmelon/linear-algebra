@@ -8,6 +8,10 @@ class MatrixTest {
 
         assert(A.toString() == "[ 1 0 0 ]\n[ 0 1 0 ]\n[ 0 0 1 ]");
     }
+
+    static testDeterminant() {
+        
+    }
     
     /**
      * Executes all tests for class Matrix.
