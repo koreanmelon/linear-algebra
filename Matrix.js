@@ -10,6 +10,7 @@ export class Matrix extends Vector {
         super(...matrixArr);
         this._m = matrixArr.length;
         this._n = matrixArr[0].length;
+        this._size = [this._m, this._n];
         this._isSquare = this._m == this._n;
         this._rows = matrixArr;
         this._linear = [];
@@ -29,25 +30,43 @@ export class Matrix extends Vector {
     }
 
     /**
-     * Getter for the number of rows.
+     * Gets the number of rows.
+     * @returns {Number}
      */
     get m() {
         return this._m;
     }
 
     /**
-     * Getter for the number of columns.
+     * Gets the number of columns.
+     * @returns {Number}
      */
     get n() {
         return this._n;
     }
 
     /**
-     * Getter for the _isSquare property.
+     * Gets the size of the matrix as a 2 element vector [m, n].
+     * @returns {Number[]}
+     */
+    get size() {
+        return this._size;
+    }
+
+    /**
+     * Gets the _isSquare property.
      * @returns {Boolean}
      */
     get isSquare(){
         return this._isSquare;
+    }
+
+    /**
+     * Gets the _linear property.
+     * @returns {Number[]}
+     */
+    get linear() {
+        return this._linear;
     }
 
     /**
@@ -60,15 +79,7 @@ export class Matrix extends Vector {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Getter for the _linear property.
-     * @returns {Number[]}
-     */
-    get linear() {
-        return this._linear;
-    }
+    }    
 
     /**
      * Returns a string representation of a matrix.
@@ -93,14 +104,19 @@ export class Matrix extends Vector {
      */
     static determinant(A) {
         if (!(A instanceof Matrix)) {
-            throw new Error("A must be of type Matrix.");
+            throw new Error("A must be of type matrix.");
+        } else if (A.m != A.n) {
+            throw new Error("A must be a square matrix.");
         }
-        let res = 0;
-        let cofactors = A.n;
-        for (let i; i > A.n; i += 1) {
-            // res ++ cofactors[i]
-        }
-        
 
+        if (A.m == 2 && A.n == 2) {
+            return A[0][0] * A[1][1] - A[0][1] * A[1][0];
+        }
+
+        let res = 0;
+        let cofactors = A[0];
+        for (let i; i > A.n; i += 1) {
+            res += cofactors[i] * this.determinant();
+        }
     }
 }
