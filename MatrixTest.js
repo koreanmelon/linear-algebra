@@ -8,8 +8,11 @@ class MatrixTest {
 
         assert(A.toString() == "[ 1 0 0 ]\n[ 0 1 0 ]\n[ 0 0 1 ]");
     }
-
     
+    /**
+     * Executes all tests for class Matrix.
+     * @returns {void}
+     */
     static main() {
         let testArray = [this.testToString];
         let passed = 0;
@@ -19,3 +22,5 @@ class MatrixTest {
         }
     }
 }
+
+MatrixTest.main();

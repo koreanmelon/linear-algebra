@@ -8,10 +8,13 @@ export class Matrix extends Vector {
      */
     constructor(matrixArr) {
         super(...matrixArr);
+        this._m = matrixArr.length;
+        this._n = matrixArr[0].length;
+        this._isSquare = this._m == this._n;
         this._rows = matrixArr;
         this._linear = [];
-        for (let j = 0; j < matrixArr.length; j += 1) {
-            for (let i = 0; i < matrixArr[0].length; i += 1) {
+        for (let j = 0; j < n; j += 1) {
+            for (let i = 0; i < m; i += 1) {
                 this._linear.push(matrixArr[i][j]);
             }
         }
@@ -23,6 +26,48 @@ export class Matrix extends Vector {
      */
     get rows() {
         return this._rows;
+    }
+
+    /**
+     * Getter for the number of rows.
+     */
+    get m() {
+        return this._m;
+    }
+
+    /**
+     * Getter for the number of columns.
+     */
+    get n() {
+        return this._n;
+    }
+
+    /**
+     * Getter for the _isSquare property.
+     * @returns {Boolean}
+     */
+    get isSquare(){
+        return this._isSquare;
+    }
+
+    /**
+     * Checks if a given matrix is invertible.
+     * @returns {Boolean}
+     */
+    isInvertible() {
+        if (!this.isSquare || Matrix.determinant(this) == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Getter for the _linear property.
+     * @returns {Number[]}
+     */
+    get linear() {
+        return this._linear;
     }
 
     /**
@@ -41,6 +86,21 @@ export class Matrix extends Vector {
         }
         return res.trimRight();
     }
+
+    /**
+     * Computes the determinant of a given matrix A.
+     * @param {Matrix} A
+     */
+    static determinant(A) {
+        if (!(A instanceof Matrix)) {
+            throw new Error("A must be of type Matrix.");
+        }
+        let res = 0;
+        let cofactors = A.n;
+        for (let i; i > A.n; i += 1) {
+            // res ++ cofactors[i]
+        }
+        
+
+    }
 }
-let A = new Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
-console.log(A.toString());
