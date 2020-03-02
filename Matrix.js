@@ -155,23 +155,21 @@ export class Matrix extends Vector {
         } else if (!A.isSquare) {
             throw new Error("A must be a square matrix.");
         }
-
+        
         if (A.m == 2 && A.n == 2) {
             return A[0][0] * A[1][1] - A[0][1] * A[1][0];
         } else {
             let res = 0;
             let repeat = A.n;
-            // console.log(repeat);
+            let coeff = 1;
             for (let i = 0; i < repeat; i += 1) {
-                console.log(A);
-                res += (A[0][0] * Matrix.determinant((A.removeCol(0).removeRow(0))));
-                A = A.cycleMatrix();
+                res += coeff * A[0][i] * this.determinant(A.removeCol(i).removeRow(0));
+                coeff *= -1;
             }
             return res;
         }
     }
 }
 
-let A = new Matrix([[1, 2, 3, 4], [6, 6, 4, 1], [0, 0, 0, 1], [2, 2, 2, 3]]);
-console.log(Matrix.determinant(A));
-// console.log(A.removeCol(0));
+// let A = new Matrix([[1, 0], [0, 1]]);
+// console.log(A.toString());

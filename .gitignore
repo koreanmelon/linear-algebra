@@ -109,3 +109,4 @@ Matrix.js
 
 # VSCode
 .vscode
+.eslintrc.json
