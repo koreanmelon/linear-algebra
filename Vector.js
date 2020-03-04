@@ -20,6 +20,14 @@ export class Vector extends Array {
         return res.trimRight() + " ]";
     }
 
+    toArray() {
+        let resArr = [];
+        for (let element of this) {
+            resArr.push(element);
+        }
+        return resArr;         
+    }
+
     /**
      * Returns a vector multiplied by a scalar C.
      * @param {Number} c 
