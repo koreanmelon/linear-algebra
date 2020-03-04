@@ -99,6 +99,21 @@ export class Matrix extends Vector {
     }
 
     /**
+     * Returns an array of vectors in this matrix.
+     * @returns {void}
+     */
+    toVector() {
+        let resVec = new Vector();
+        for (let i = 0; i < this.n; i += 1) {
+            resVec.push([]);
+        }
+        for (let i = 0; i < this.linear.length; i += 1) {
+            resVec[i % this.n].push(this.linear[i]);
+        }
+        return resVec;
+    }
+
+    /**
      * Removes a row from the matrix.
      * @param {Number} rowIndex 
      */
@@ -130,6 +145,8 @@ export class Matrix extends Vector {
         return new Matrix(resArr);
     }
 
+    /** Static Methods */
+
     /**
      * Computes the determinant of a given matrix A.
      * @param {Matrix} A
@@ -154,6 +171,42 @@ export class Matrix extends Vector {
             return res;
         }
     }
+
+    /**
+     * Multiplies this matrix with a vector U.
+     * @param {Vector} u
+     */
+    multiply(u) {
+        if (this.n != u.length) {
+            throw new Error("Invalid Dimensions");
+        }
+        let resVec = new Vector();
+        for (let ui = 0; ui < u.length; ui += 1) {
+            resVec.push(0);
+        }
+        
+        for (let i = 0; i < this.m; i += 1) {
+            for (let j = 0; j < this.n; j += 1) {
+                resVec[i] += this[i][j] * u[j];
+            }
+        }
+        return resVec;
+    }
+
+
+    /**
+     * An implementation of matrix multiplication.
+     * @param {Matrix} A 
+     * @param {Matrix} B 
+     * @returns {Matrix}
+     */
+    static multiply(A, B) {
+        let BVec = B.toVector();
+        let resArr = [];
+        for (let vector of BVec) {
+            resArr.push(A.multiply(vector).toArray());
+        }
+        return new Matrix(resArr);
+    }
 }
 
-console.log(new Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]));

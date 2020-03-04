@@ -35,6 +35,14 @@ class MatrixTest {
         return test;
     }
 
+    static testMultiply() {
+        // let A = new Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
+        // let B = new Matrix([[1, 2, 3], [1, 2, 3], [1, 2, 3]]);
+        // let u = new Vector(1, 0, 0);
+
+
+    }
+
     /**
      * Executes all tests for class Matrix.
      * @returns {void}
