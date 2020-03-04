@@ -1,4 +1,4 @@
-export class Vector extends Array {
+export default class Vector extends Array {
 
     /**
      * Initializes a vector.
@@ -49,6 +49,7 @@ export class Vector extends Array {
      * Adds an arbitrary number of vectors.
      * @param  {...Vector} vectors 
      * @returns {Vector}
+     * @static
      */
     static add(...vectors) {
         let res = vectors.pop();

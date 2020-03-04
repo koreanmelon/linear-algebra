@@ -1,6 +1,6 @@
-import { Vector } from "./Vector.js";
+import Vector from "./Vector.js";
 
-export class Matrix extends Vector {
+export default class Matrix extends Vector {
     
     /**
      * Initializes a matrix.
@@ -129,7 +129,7 @@ export class Matrix extends Vector {
 
     /**
      * Removes a column from the matrix.
-     * @param {Number} colIndex 
+     * @param {Number} colIndex
      */
     removeCol(colIndex) {
         let resArr = [];
@@ -144,8 +144,6 @@ export class Matrix extends Vector {
         }
         return new Matrix(resArr);
     }
-
-    /** Static Methods */
 
     /**
      * Computes the determinant of a given matrix A.
@@ -207,5 +205,115 @@ export class Matrix extends Vector {
         }
         return new Matrix(resArr);
     }
+
+    /**
+     * Swaps two rows ROW0 and ROW1 in this matrix.
+     * @param {Number} row0
+     * @param {Number} row1
+     * @returns {Matrix}
+     */
+    swap(row0, row1) {
+        let tempRow = this[row0];
+        this[row0] = this[row1];
+        this[row1] = tempRow;
+        return this;
+    }
+
+    /**
+     * Adds two rows ROW0 and ROW1 together, scales the first by a scalar SCALAR, and replaces the second with the sum.
+     * @param {Number} row0 
+     * @param {Number} row1 
+     * @param {Number scalar 
+     */
+    replace(row0, row1, scalar) {
+        let tempVec0 = new Vector(...this[row0]);
+        let tempVec1 = new Vector(...this[row1]);
+        this[row1] = Vector.add(tempVec0.scalarMul(scalar), tempVec1).toArray();
+        return this;
+    }
+
+    /**
+     * Scales the row of this matrix at ROWINDEX by a scalar SCALAR.
+     * @param {Number} rowIndex the row index to scale
+     * @param {Number} scalar the number to scale by
+     * @returns {Matrix}
+     */
+    scale(rowIndex, scalar) {
+        let tempVec = new Vector(...this[rowIndex]);
+        this[rowIndex] = tempVec.scalarMul(scalar).toArray();
+        return this
+    }
+
+    /**
+     * Performs row operations to return this matrix in row echelon form.
+     */
+    toREF() {
+        let refMatrix = this.copy();
+
+        // Make sure the first entry of the first row is not 0.
+        let swapIndex = 1;
+        while (refMatrix[0][0] == 0 && swapIndex < refMatrix.m) {
+            refMatrix.swap(0, swapIndex);
+            swapIndex += 1;
+        }
+
+        for (let colIndex = 0; colIndex < refMatrix.n; colIndex += 1) {
+            for (let rowIndex = colIndex + 1; rowIndex < refMatrix.m; rowIndex += 1) {
+                refMatrix.replace(colIndex, rowIndex, (-1) * refMatrix[rowIndex][colIndex] / refMatrix[colIndex][colIndex]);
+            }
+        }
+
+        return refMatrix.copy();
+    }
+
+    /**
+     * Performs row operations to return this matrix in reduced row echelon form.
+     */
+    toRREF() {
+        let rrefMatrix = this.toREF();
+
+        let pivots = [];
+
+        for (let rowIndex = 0; rowIndex < rrefMatrix.m; rowIndex += 1) {
+            for (let colIndex = 0; colIndex < rrefMatrix.n; colIndex += 1) {
+                if (rrefMatrix[rowIndex][colIndex] != 0) {
+                    pivots.push([rowIndex, colIndex]);
+                    break;
+                }
+            }
+        }
+
+        for (let pivot of pivots) {
+            rrefMatrix.scale(pivot[0], 1 / rrefMatrix[pivot[0]][pivot[1]]);
+        }
+        
+        /**
+         * Flips a matrix.
+         * @param {Matrix} A 
+         */
+        function flipMatrix(A) {
+            for (let first = 0, last = A.m - 1; first <= Math.floor(A.m / 2); first += 1, last -= 1) {
+                A.swap(first, last);
+            }
+
+            for (let row of A) {
+                row = row.reverse();
+            }
+
+            return A;
+        }
+
+        rrefMatrix = flipMatrix(flipMatrix(rrefMatrix).toREF());
+        for (let i = 0; i < rrefMatrix.m; i += 1) {
+            for (let j = 0; j < rrefMatrix.n; j += 1) {
+                if (Object.is(rrefMatrix[i][j], -0)) {
+                    rrefMatrix[i][j] = 0;
+                }
+            }
+        }
+        return rrefMatrix.copy();
+    }
 }
 
+let A = new Matrix([[1, 1, 1], [3, 2, 0], [4, 1, 1]]);
+console.log(A.toRREF());
