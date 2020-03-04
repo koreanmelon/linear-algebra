@@ -4,17 +4,14 @@ export class Matrix extends Vector {
     
     /**
      * Initializes a matrix.
-     * @param {Number[][]} matrixArr 
+     * @param {Number[][]} matrixArr The array used to construct a matrix.
      */
     constructor(matrixArr) {
         super(...matrixArr);
-        this._m = matrixArr.length;
-        this._n = matrixArr[0].length;
-        this._size = [this._m, this._n];
-        this._isSquare = this._m == this._n;
+        this._size = [matrixArr.length, matrixArr[0].length];
         this._linear = [];
-        for (let j = 0; j < this._n; j += 1) {
-            for (let i = 0; i < this._m; i += 1) {
+        for (let j = 0; j < this.n; j += 1) {
+            for (let i = 0; i < this.m; i += 1) {
                 this._linear.push(matrixArr[i][j]);
             }
         }
@@ -33,23 +30,7 @@ export class Matrix extends Vector {
     }
 
     /**
-     * Gets the number of rows.
-     * @returns {Number}
-     */
-    get m() {
-        return this._m;
-    }
-
-    /**
-     * Gets the number of columns.
-     * @returns {Number}
-     */
-    get n() {
-        return this._n;
-    }
-
-    /**
-     * Gets the size of the matrix as a 2 element vector [m, n].
+     * Gets the size of the matrix as a 2 element array [m, n].
      * @returns {Number[]}
      */
     get size() {
@@ -57,11 +38,27 @@ export class Matrix extends Vector {
     }
 
     /**
-     * Gets the _isSquare property.
+     * Gets the number of rows.
+     * @returns {Number}
+     */
+    get m() {
+        return this.size[0];
+    }
+
+    /**
+     * Gets the number of columns.
+     * @returns {Number}
+     */
+    get n() {
+        return this.size[1];
+    }    
+
+    /**
+     * Returns if the matrix is square or not.
      * @returns {Boolean}
      */
     get isSquare(){
-        return this._isSquare;
+        return this.m == this.n;
     }
 
     /**
@@ -82,7 +79,7 @@ export class Matrix extends Vector {
         } else {
             return true;
         }
-    }    
+    }
 
     /**
      * Returns a string representation of a matrix.
@@ -99,18 +96,6 @@ export class Matrix extends Vector {
             res += `${rowStr}\n`;
         }
         return res.trimRight();
-    }
-
-    /**
-     * Cycles the matrix.
-     */
-    cycleMatrix() {
-        let res = new Matrix(this);
-        for (let row of res) {
-            let entry = row.shift();
-            row.push(entry);
-        }
-        return new Matrix(res);
     }
 
     /**
@@ -171,5 +156,4 @@ export class Matrix extends Vector {
     }
 }
 
-// let A = new Matrix([[1, 0], [0, 1]]);
-// console.log(A.toString());
+console.log(new Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
