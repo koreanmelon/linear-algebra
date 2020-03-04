@@ -193,7 +193,6 @@ export class Matrix extends Vector {
         return resVec;
     }
 
-
     /**
      * An implementation of matrix multiplication.
      * @param {Matrix} A 

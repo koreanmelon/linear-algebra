@@ -20,6 +20,10 @@ export class Vector extends Array {
         return res.trimRight() + " ]";
     }
 
+    /**
+     * Returns an array representation of this vector.
+     * @returns {Number[]}
+     */
     toArray() {
         let resArr = [];
         for (let element of this) {
