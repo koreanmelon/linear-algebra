@@ -25,7 +25,7 @@ export class Vector extends Array {
      * @param {Number} c 
      * @returns {Vector}
      */
-    sMul(c) {
+    scalarMul(c) {
         let res = new Vector();
         for (let entry of this) {
             res.push(entry * c);
