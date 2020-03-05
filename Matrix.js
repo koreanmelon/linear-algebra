@@ -314,6 +314,3 @@ export default class Matrix extends Vector {
         return rrefMatrix.copy();
     }
 }
-
-let A = new Matrix([[1, 1, 1], [3, 2, 0], [4, 1, 1]]);
-console.log(A.toRREF());

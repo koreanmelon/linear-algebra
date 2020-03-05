@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/koreanmelon/linear-algebra/issues"
   },
-  "homepage": "https://github.com/koreanmelon/linear-algebra#readme"
+  "homepage": "https://github.com/koreanmelon/linear-algebra#readme",
+  "dependencies": {
+    "nodejs-unit-testing": "file:../nodejs-unit-testing"
+  }
 }
